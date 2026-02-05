@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Me or You 💖</title>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+      width: 92%;
+      max-width: 420px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      background: #ff4d6d;
+      color: white;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #e63950;
+    }
+
+    #noBtn {
+      background: #999;
+      position: relative;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .message {
+      margin-top: 12px;
+      color: #ff4d6d;
+      font-size: 15px;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 20px;
+      margin-top: 15px;
+    }
+
+    /* 💖 Falling hearts */
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 26px;
+      animation: fall 3s linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- QUIZ -->
+  <div id="quiz">
+    <h1>💘 Me or You 💘</h1>
+    <p id="questionText"></p>
+
+    <button onclick="nextQuestion()">Me 💁‍♀️</button>
+    <button onclick="nextQuestion()">You 😏</button>
+  </div>
+
+  <!-- VALENTINE QUESTION -->
+  <div id="valentine" class="hidden">
+    <h1>One last thing… 🌹</h1>
+    <p>Will you be my Valentine?</p>
+
+    <button onclick="yesClicked()">YES 💖</button>
+    <button id="noBtn" onclick="noClicked()">NO 😐</button>
+
+    <p class="message" id="noMessage"></p>
+  </div>
+
+  <!-- YES SCREEN -->
+  <div id="yesScreen" class="hidden">
+    <h1>YAYYYY 💕</h1>
+    <p>You’re officially my Valentine 🥰</p>
+    <img src="us.jpg" alt="Us 💖">
+    <p>Forever stuck with me 😌💘</p>
+  </div>
+
+</div>
+
+<script>
+  const questions = [
+    "🍔 Who eats faster?",
+    "😴 Who naps ‘just for 10 minutes’ and wakes up an hour later?",
+    "🧟 Who would survive longer in a zombie apocalypse?",
+    "💬 Who apologizes first after a fight?",
+    "📱 Who is worse at replying on time?",
+    "💡 Who plans the dates in an instant?",
+    "🧠 Who remembers every little detail about our first date?",
+    "🥺 Who cries more when we have to say goodbye for a while?",
+    "😜 Who drives the other crazier (in a good way)?",
+    "🍀 Who is luckier to have the other?"
+  ];
+
+  let current = 0;
+  const questionText = document.getElementById("questionText");
+  questionText.innerText = questions[current];
+
+  function nextQuestion() {
+    current++;
+    if (current < questions.length) {
+      questionText.innerText = questions[current];
+    } else {
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("valentine").classList.remove("hidden");
+    }
+  }
+
+  const noExcuses = [
+    "❌ Error 404: No not found",
+    "💖 The system already chose you",
+    "🔐 This option is locked by love",
+    "😌 You really thought NO was allowed?",
+    "💍 Valentine already assigned"
+  ];
+
+  function noClicked() {
+    document.getElementById("noMessage").innerText =
+      noExcuses[Math.floor(Math.random() * noExcuses.length)];
+
+    const noBtn = document.getElementById("noBtn");
+    noBtn.style.top = Math.random() * 80 - 40 + "px";
+    noBtn.style.left = Math.random() * 80 - 40 + "px";
+  }
+
+  function yesClicked() {
+    document.getElementById("valentine").classList.add("hidden");
+    document.getElementById("yesScreen").classList.remove("hidden");
+    launchHearts();
+  }
+
+  function launchHearts() {
+    for (let i = 0; i < 35; i++) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = Math.random() * 2 + 2 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    }
+  }
+</script>
+
+</body>
+</html>
